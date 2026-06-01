@@ -17,6 +17,22 @@ export class FinanceTrackerApiClient {
     return (await res.json()) as T;
   }
 
+  async post<T>(path: string, body: unknown, context: ApiRequestContext = {}): Promise<T> {
+    const res = await fetch(`${this.baseUrl}${path}`, {
+      method: 'POST',
+      headers: {
+        ...this.headers(context),
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) {
+      const text = await res.text().catch(() => '');
+      throw new Error(`Finance Tracker API ${path} returned ${res.status}${text ? `: ${text}` : ''}`);
+    }
+    return (await res.json()) as T;
+  }
+
   private headers(context: ApiRequestContext): Record<string, string> {
     return {
       ...(config.FINTRACK_API_SERVICE_TOKEN

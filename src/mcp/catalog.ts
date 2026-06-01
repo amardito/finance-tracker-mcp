@@ -18,6 +18,8 @@ export const mcpTools = [
   'get_cashflow_summary',
   'create_setup_proposal',
   'create_transaction_proposal',
+  'redeem_claw_link_code',
+  'handle_claw_text_command',
   'create_transaction_from_receipt_proposal',
   'create_account_transfer_proposal',
   'create_budget_proposal',

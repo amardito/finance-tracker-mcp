@@ -6,7 +6,9 @@ import { config } from './config.js';
 import { logger } from './logger.js';
 import { FinanceTrackerApiClient } from './api-client.js';
 import { getCatalog } from './mcp/catalog.js';
+import { createMcpProtocolRouter } from './mcp/protocol.js';
 import { createReadResourcesRouter } from './mcp/read-resources.js';
+import { createToolsRouter } from './mcp/tools.js';
 
 export function createApp(): express.Express {
   const app = express();
@@ -42,7 +44,9 @@ export function createApp(): express.Express {
     res.json(getCatalog());
   });
 
+  app.use('/mcp', createMcpProtocolRouter(apiClient));
   app.use('/mcp/resources', createReadResourcesRouter(apiClient));
+  app.use('/mcp/tools', createToolsRouter(apiClient));
 
   app.use((_req, res) => {
     res.status(404).json({ error: { code: 'NOT_FOUND', message: 'Route not found' } });
