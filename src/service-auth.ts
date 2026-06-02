@@ -15,7 +15,7 @@ export function requireServiceAuth(req: Request, res: Response, next: NextFuncti
   const auth = req.headers.authorization ?? '';
   const bearer = auth.startsWith('Bearer ') ? auth.slice('Bearer '.length) : '';
   const header = req.headers['x-fintrack-service-token'];
-  const token = bearer || (Array.isArray(header) ? header[0] : header) || '';
+  const token = compactSecret(bearer || (Array.isArray(header) ? header[0] : header) || '');
   if (!constantTimeEquals(token, config.FINTRACK_MCP_SERVICE_TOKEN)) {
     res.status(401).json({
       error: {
@@ -26,6 +26,10 @@ export function requireServiceAuth(req: Request, res: Response, next: NextFuncti
     return;
   }
   next();
+}
+
+function compactSecret(value: string): string {
+  return value.replace(/\s+/g, '');
 }
 
 function constantTimeEquals(a: string, b: string): boolean {
