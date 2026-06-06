@@ -10,6 +10,7 @@ export const mcpResources = [
 
 export const mcpTools = [
   'get_setup_templates',
+  'get_marbot_capabilities',
   'get_accounts',
   'get_categories',
   'get_recent_transactions',
@@ -17,6 +18,8 @@ export const mcpTools = [
   'get_goal_status',
   'get_cashflow_summary',
   'create_setup_proposal',
+  'create_account_proposal',
+  'create_recurring_rule_proposal',
   'create_transaction_proposal',
   'redeem_claw_link_code',
   'handle_claw_text_command',
